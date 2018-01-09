@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Codegen-Swift": {
+      "commandName": "Project",
+      "commandLineArgs": "-m Model -t Templates/Swift -o Output/Swift -g ..\\GeneratorSwift\\bin\\Debug\\netstandard1.6\\GeneratorSwift.dll"
+    },
+    "Codegen-Sharp": {
+      "commandName": "Project",
+      "commandLineArgs": "-m Model -t Templates/Sharp -o Output/Sharp -g ..\\GeneratorSharp\\bin\\Debug\\netstandard1.6\\GeneratorSharp.dll"
+    }
+  }
+}

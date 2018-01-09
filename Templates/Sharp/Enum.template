@@ -1,0 +1,6 @@
+﻿	
+	public enum {{name}} : {{baseType | type_lookup }} {
+		{% for value in values -%}
+		{{value.name}} = {{value.value}},
+		{% endfor -%}
+	}

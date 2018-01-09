@@ -1,0 +1,34 @@
+﻿
+public class {{name}} {% if MessageId != 0 %}: MessagePayload {% endif %}{
+
+    public static let _size = {{size}}
+    public let _size = {{size}}
+    public let _type:UInt16 = {{MessageId}}
+
+    {% for property in properties -%}
+    public var {{property.name}}:{{property | property_type_decl}}
+    {% endfor -%}
+
+    public init({% for property in properties limit:1 -%}{{property.name}}:{{property | property_type_decl}}{% endfor -%}{% for property in properties offset:1 -%}, {{property.name}}:{{property | property_type_decl}}{% endfor -%}){
+        {% for property in properties -%}
+        self.{{property.name}} = {{property.name}}
+        {% endfor -%}
+    }
+
+    public init?(stream:DataInputStream){
+        do{
+            {% for property in properties -%}
+            {{property.name}} = {{property | reader_method: "stream"}}
+            {% endfor -%}
+        }catch{
+            return nil
+        }
+    }
+
+    public func emit(stream:DataOutputStream){
+        {% for property in properties -%}
+        {{property | writer_method: "stream"}}
+        {% endfor -%}
+    }
+
+}

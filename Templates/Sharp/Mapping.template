@@ -1,0 +1,39 @@
+﻿
+	public enum MessageType : ushort {
+		{% for item in messageTypesById -%}
+		{{item.Value}} = {{item.Key}},
+		{% endfor -%}
+	}
+
+	
+
+	public static class MessagePayloadFromType{
+
+		public static Dictionary<ushort, Func<byte[], ushort, MessagePayload>> Generator = new Dictionary
+				<ushort, Func<byte[], ushort, MessagePayload>>()
+				{
+					{% for item in messageTypesById -%}
+					{
+						{{item.Key}}, (data, offset) =>
+						{
+							if (data.Length >= offset + {{item.Value}}.SizeOf)
+                            {
+								IntPtr ptr = Marshal.AllocHGlobal({{item.Value}}.SizeOf);
+								Marshal.Copy(data, offset, ptr, {{item.Value}}.SizeOf);
+								var payload = Marshal.PtrToStructure<{{item.Value}}>(ptr);
+								Marshal.FreeHGlobal(ptr);
+								return payload;
+							}else{
+								throw new InvalidOperationException("trying to deserialize insufficent data");
+							}
+						}
+					},
+					{% endfor -%}
+				};
+
+		public static Dictionary<ushort, Type> Lookup = new Dictionary<ushort, Type>() {
+			{% for item in messageTypesById -%}
+				{ {{item.Key}}, typeof({{item.Value}}) },
+			{% endfor -%}
+		};
+	}

@@ -1,0 +1,6 @@
+bin/
+clrdbg/
+obj/
+.idea/
+.vs/
+.DS_Store

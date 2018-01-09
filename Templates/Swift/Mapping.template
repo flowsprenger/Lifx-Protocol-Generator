@@ -1,0 +1,18 @@
+﻿
+public protocol MessagePayload{
+    func emit(stream:DataOutputStream)
+    var _size:Int {get}
+    var _type:UInt16 {get}
+}
+
+public enum MessageType : UInt16 {
+    {% for item in messageTypesById -%}
+    case {{item.Value}} = {{item.Key}}
+    {% endfor -%}
+}
+
+public let MessagePayloadFromType : [UInt16:(DataInputStream) -> MessagePayload?] = [
+    {% for item in messageTypesById -%}
+        {{item.Key}} : { stream in {{item.Value}}(stream:stream) },
+    {% endfor -%}
+]

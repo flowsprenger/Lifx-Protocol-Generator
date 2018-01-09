@@ -1,0 +1,40 @@
+﻿
+	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode, Pack = 1)]
+    public partial struct {{name}} {% if MessageId != 0 %}: MessagePayload {% endif %}{
+		public static ushort SizeOf = {{size}};
+		public ushort StructSize()
+        {
+            return {{size}};
+        }
+		{% if MessageId != 0 %}
+		public static ushort TypeOf = {{MessageId}};
+		public ushort MessageType()
+        {
+            return {{MessageId}};
+        }
+		{% endif %}
+		
+
+		{% for property in properties -%}
+		{% if property.length > 0 %}[MarshalAs(UnmanagedType.ByValArray, SizeConst = {{property.length}})]{% endif %}
+		{% if property.size > 1 %}[MarshalAs(UnmanagedType.ByValArray, SizeConst = {{property.size}})]{% endif %}
+		public {{property | property_type_decl}} {{property.name | capitalize}};
+		{% if property.type_name == "string" %}
+		public string {{property.name | capitalize}}String
+        {
+            get
+            {
+                int length = Array.IndexOf<byte>({{property.name | capitalize }}, 0);
+                return Encoding.UTF8.GetString({{property.name | capitalize }}, 0, length < 0 ? {{property.name | capitalize }}.Length : length);
+            }
+            set
+            {
+                {{property.name | capitalize }} = Encoding.UTF8.GetBytes(value);
+                Array.Resize(ref {{property.name | capitalize }}, {{property.size}});
+            }
+        }
+		{% endif %}
+		{% endfor -%}
+	}
+
+

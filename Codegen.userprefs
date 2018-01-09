@@ -1,0 +1,16 @@
+﻿<Properties StartupConfiguration="{791F01DA-7EA5-4001-BB29-B846A2ADEF16}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="GeneratorDomain/Properties/AssemblyInfo.cs">
+    <Files>
+      <File FileName="GeneratorDomain/DomainModel.cs" Line="1" Column="1" />
+      <File FileName="Codegen/Program.cs" Line="1" Column="1" />
+      <File FileName="GeneratorDomain/Properties/AssemblyInfo.cs" Line="9" Column="12" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Codegen PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations />
+</Properties>

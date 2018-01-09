@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<def xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="schema.xsd">
+   <type name="Header">
+       <property name="size" type="short" />
+       <property name="protocolOriginTagged" type="short" />
+       <property name="source" type="word" />
+       <property name="target" type="long" />
+       <property name="reserved" type="byte" length="6" />
+       <property name="flags" type="byte" />
+       <property name="sequence" type="byte" />
+       <property name="reserved1" type="long" />
+       <property name="type" type="short" />
+       <property name="reserved2" type="short" />
+   </type>
+
+   <enum name="Service" baseType="byte">
+        <value value="1">UDP</value>
+   </enum>
+
+   <type name="GetService" messageId="2" />
+   <type name="StateService" messageId="3">
+       <property name="service" type="Service" />
+       <property name="port" type="word" />
+   </type>
+
+    <type name="GetHostInfo" messageId="12" />
+    <type name="StateHostInfo" messageId="13">
+        <property name="signal" type="float" />
+        <property name="tx" type="word" />
+        <property name="rx" type="word" />
+        <property name="reserved" type="short" />
+    </type>
+
+    <type name="GetHostFirmware" messageId="14" />
+    <type name="StateHostFirmware" messageId="15">
+        <property name="build" type="long" />
+        <property name="reserved" type="long" />
+        <property name="version" type="word" />
+    </type>
+
+
+    <type name="GetWifiInfo" messageId="16" />
+    <type name="StateWifiInfo" messageId="17">
+        <property name="signal" type="float" />
+        <property name="tx" type="word" />
+        <property name="rx" type="word" />
+        <property name="reserved" type="short" />
+    </type>
+
+    <type name="GetWifiFirmware" messageId="18" />
+    <type name="StateWifiFirmware" messageId="19">
+        <property name="build" type="long" />
+        <property name="reserved" type="long" />
+        <property name="version" type="word" />
+    </type>
+
+
+    <enum name="PowerState" baseType="short">
+        <value value="0">OFF</value>
+        <value value="65535">ON</value>
+    </enum>
+
+    <type name="GetPower" messageId="20" />
+    <type name="SetPower" messageId="21">
+        <property name="level" type="short" />
+    </type>
+    <type name="StatePower" messageId="22">
+        <property name="level" type="short" />
+    </type>
+
+
+    <type name="GetLabel" messageId="23" />
+    <type name="SetLabel" messageId="24">
+        <property name="label" type="string" size="32" />
+    </type>
+    <type name="StateLabel" messageId="25">
+        <property name="label" type="string" size="32" />
+    </type>
+
+
+    <type name="GetVersion" messageId="32" />
+    <type name="StateVersion" messageId="33">
+        <property name="vendor" type="word" />
+        <property name="product" type="word" />
+        <property name="version" type="word" />
+    </type>
+
+    <type name="GetInfo" messageId="34" />
+    <type name="StateInfo" messageId="35">
+        <property name="time" type="long" />
+        <property name="uptime" type="long" />
+        <property name="downtime" type="long" />
+    </type>
+
+    <type name="Acknowledgement" messageId="45" />
+
+    <type name="GetLocation" messageId="48" />
+    <type name="SetLocation" messageId="49">
+        <property name="location" type="byte" length="16" />
+        <property name="label" type="string" size="32" />
+        <property name="updated_at" type="long" />
+    </type>
+    <type name="StateLocation" messageId="50">
+        <property name="location" type="byte" length="16" />
+        <property name="label" type="string" size="32" />
+        <property name="updated_at" type="long" />
+    </type>
+
+    <type name="GetGroup" messageId="51" />
+    <type name="SetGroup" messageId="52">
+        <property name="group" type="byte" length="16" />
+        <property name="label" type="string" size="32" />
+        <property name="updated_at" type="long" />    
+    </type>
+    <type name="StateGroup" messageId="53">
+        <property name="group" type="byte" length="16" />
+        <property name="label" type="string" size="32" />
+        <property name="updated_at" type="long" />
+    </type>
+
+    <type name="EchoRequest" messageId="58">
+        <property name="payload" type="byte" length="64" />
+    </type>
+    <type name="EchoResponse" messageId="59">
+        <property name="payload" type="byte" length="64" />
+    </type>
+
+    <type name="HSBK">
+        <property name="hue" type="short" />
+        <property name="saturation" type="short" />
+        <property name="brightness" type="short" />
+        <property name="kelvin" type="short" />
+    </type>
+
+
+    <type name="LightGet" messageId="101" />
+    <type name="LightSetColor" messageId="102">
+        <property name="reserved" type="byte" />
+        <property name="color" type="HSBK" />
+        <property name="duration" type="word" />
+    </type>
+
+    <enum name="WaveformType" baseType="byte">
+        <value value="0">SAW</value>
+        <value value="1">SINE</value>
+        <value value="2">HALF_SINE</value>
+        <value value="3">TRIANGLE</value>
+        <value value="4">PULSE</value>
+    </enum>
+
+    <type name="LightSetWaveform" messageId="103">
+        <property name="reserved" type="byte" />
+        <property name="transient" type="byte" />
+        <property name="color" type="HSBK" />
+        <property name="period" type="word" />
+        <property name="cycles" type="float" />
+        <property name="skew_ratio" type="signedshort" />
+        <property name="waveform" type="WaveformType" />
+    </type>
+    
+    
+    <type name="LightState" messageId="107">
+        <property name="color" type="HSBK" />
+        <property name="reserved" type="short" />
+        <property name="power" type="short" />
+        <property name="label" type="string" size="32" />
+        <property name="reserved1" type="long" />
+    </type>
+
+
+    <type name="LightSetWaveformOptional" messageId="119">
+        <property name="reserved" type="byte" />
+        <property name="transient" type="byte" />
+        <property name="color" type="HSBK" />
+        <property name="period" type="word" />
+        <property name="cycles" type="float" />
+        <property name="skew_ratio" type="signedshort" />
+        <property name="waveform" type="WaveformType" />
+
+        <property name="set_hue" type="byte" />
+        <property name="set_saturation" type="byte" />
+        <property name="set_brightness" type="byte" />
+        <property name="set_kelvin" type="byte" />
+        
+    </type>
+    
+    <type name="LightGetPower" messageId="116" />
+    <type name="LightSetPower" messageId="117">
+        <property name="level" type="short" />
+        <property name="duration" type="word" />
+    </type>
+    <type name="LightStatePower" messageId="118">
+        <property name="level" type="short" />
+    </type>
+
+
+    <type name="GetInfrared" messageId="120" />
+    <type name="StateInfrared" messageId="121">
+        <property name="brightness" type="short" />
+    </type>
+    <type name="SetInfrared" messageId="122">
+        <property name="brightness" type="short" />
+    </type>
+
+    <enum name="ApplicationRequest" baseType="byte">
+        <value value="0">NO_APPLY</value>
+        <value value="1">APPLY</value>
+        <value value="2">APPLY_ONLY</value>
+    </enum>
+
+    <type name="SetColorZones" messageId="501">
+        <property name="start_index" type="byte" />
+        <property name="end_index" type="byte" />
+        <property name="color" type="HSBK" />
+        <property name="duration" type="word" />
+        <property name="apply" type="ApplicationRequest" />
+    </type>
+    <type name="GetColorZones" messageId="502">
+        <property name="start_index" type="byte" />
+        <property name="end_index" type="byte" />
+    </type>
+    <type name="StateZone" messageId="503">
+        <property name="count" type="byte" />
+        <property name="index" type="byte" />
+        <property name="color" type="HSBK" />
+    </type>
+
+    <type name="StateMultiZone" messageId="506">
+        <property name="count" type="byte" />
+        <property name="index" type="byte" />
+        <property name="color" type="HSBK" length="8" />
+    </type>
+
+</def>
