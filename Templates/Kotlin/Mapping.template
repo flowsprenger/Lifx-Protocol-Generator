@@ -1,0 +1,14 @@
+﻿
+enum class MessageType(value: Int){
+    {% for item in messageTypesById -%}
+    {{item.Value}}({{item.Key}}),
+    {% endfor -%}
+}
+
+val payloadFactories = hashMapOf<Int, LifxMessageDeserialzable>(
+    {% for item in messageTypesById -%}
+        {{item.Key}} to {{item.Value}},
+    {% endfor -%}
+        0 to TODO()
+)
+

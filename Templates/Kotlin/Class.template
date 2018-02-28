@@ -1,0 +1,39 @@
+﻿
+class {{name}} : {% if MessageId != 0 %} LifxMessagePayload {% else %} LifxMessageSerializable {% endif %}{
+
+    override val _size = {{size}}
+    {% if MessageId != 0 %}
+    override val _type = {{MessageId}}
+    {% endif %}
+
+    {% for property in properties -%}
+    var {{property.name}}:{{property | property_type_decl}}
+    {% endfor -%}
+    
+    override fun addToByteBuffer(buffer: ByteBuffer): ByteBuffer{
+        {% for property in properties -%}
+        {{property | writer_method: "buffer"}}
+        {% endfor -%}
+        return buffer
+    }
+
+    constructor({% for property in properties limit:1 -%}{{property.name}}:{{property | property_type_decl}}{% endfor -%}{% for property in properties offset:1 -%}, {{property.name}}:{{property | property_type_decl}}{% endfor -%}){
+        {% for property in properties -%}
+        this.{{property.name}} = {{property.name}}
+        {% endfor -%}
+    }
+    
+    constructor(buffer: ByteBuffer){
+        {% for property in properties -%}
+        {{property.name}} = {{property | reader_method: "buffer"}}
+        {% endfor -%}
+    }
+    
+    {% if MessageId != 0 %} 
+    companion object : LifxMessageDeserialzable {
+        override fun parse(buffer: ByteBuffer):LifxMessagePayload {
+            return {{name}}(buffer)
+        }
+    }
+    {% endif %}
+}

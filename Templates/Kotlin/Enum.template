@@ -1,0 +1,16 @@
+﻿
+enum class {{name}}(val value: {{baseType | type_lookup }}) {
+    {% for value in values -%}
+    {{value.name}}({{value.value}}{{baseType | enforce_primitive }}),
+    {% endfor -%}
+    
+        UNKNOWN(0);
+    
+        companion object {
+            private val ordinals = enumValues<{{name}}>().associateBy { it.value }
+    
+            fun fromValue(value: {{baseType | type_lookup }}): {{name}}{
+                return ordinals.getOrElse(value, { {{name}}.UNKNOWN })
+            }
+        }
+}
