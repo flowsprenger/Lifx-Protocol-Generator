@@ -12,6 +12,9 @@ Prerequisite
 Install dot net (Windows, OSX, Linux):
 https://www.microsoft.com/net/learn/get-started/
 
+and the runtime for version 2.0.5
+https://www.microsoft.com/net/download/all
+
 You should be able to build and from an ide (Visual Studio (for Mac), Rider) by creating the appropriate run config.
 
 Building on the the commandline with .net core

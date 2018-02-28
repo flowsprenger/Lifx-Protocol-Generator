@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -42,7 +43,7 @@ namespace GeneratorSwift
             foreach (var domainType in Model.Types)
             {
                 output.Append(
-                    classTemplate.Render(new RenderParameters
+                    classTemplate.Render(new RenderParameters(CultureInfo.InvariantCulture)
                     {
                         LocalVariables = Hash.FromAnonymousObject(domainType),
                         Filters = new[] { typeof(SwiftFilters) }
@@ -53,7 +54,7 @@ namespace GeneratorSwift
             foreach (var domainType in Model.Enumerations)
             {
                 output.Append(
-                    enumTemplate.Render(new RenderParameters
+                    enumTemplate.Render(new RenderParameters(CultureInfo.InvariantCulture)
                     {
                         LocalVariables = Hash.FromAnonymousObject(domainType),
                         Filters = new[] {typeof(SwiftFilters)}
@@ -62,7 +63,7 @@ namespace GeneratorSwift
             }
 
             output.Append(
-                mappingTemplate.Render(new RenderParameters
+                mappingTemplate.Render(new RenderParameters(CultureInfo.InvariantCulture)
                 {
                     LocalVariables = Hash.FromAnonymousObject(new {MessageTypesById = Model.MessageTypesByIdList}),
                     Filters = new[] {typeof(SwiftFilters)}

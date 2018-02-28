@@ -20,7 +20,7 @@
     <ProjectReference Include="..\GeneratorDomain\GeneratorDomain.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DotLiquid" Version="2.0.155" />
-    <PackageReference Include="NETStandard.Library" Version="1.6.1" />
+    <PackageReference Include="DotLiquid" Version="2.0.254" />
+    <PackageReference Include="NETStandard.Library" Version="2.0.1" />
   </ItemGroup>
 </Project>

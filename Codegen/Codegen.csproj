@@ -23,8 +23,9 @@
     <ProjectReference Include="..\GeneratorDomain\GeneratorDomain.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CommandLineParser" Version="2.1.1-beta" />
+    <PackageReference Include="CommandLineParser" Version="2.2.1" />
+    <PackageReference Include="DotLiquid" Version="2.0.254" />
+    <PackageReference Include="Microsoft.NETCore.App" Version="2.0.5" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
-    <PackageReference Include="DotLiquid" Version="2.0.155" />
   </ItemGroup>
 </Project>
