@@ -16,6 +16,7 @@ public class {{name}} {% if MessageId != 0 %}: MessagePayload {% endif %}{
     }
 
     public init?(stream:DataInputStream){
+	{% if properties.size > 0 %}
         do{
             {% for property in properties -%}
             {{property.name}} = {{property | reader_method: "stream"}}
@@ -23,6 +24,7 @@ public class {{name}} {% if MessageId != 0 %}: MessagePayload {% endif %}{
         }catch{
             return nil
         }
+	{% endif %}
     }
 
     public func emit(stream:DataOutputStream){
