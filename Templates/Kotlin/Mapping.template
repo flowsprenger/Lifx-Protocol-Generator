@@ -1,5 +1,5 @@
 ﻿
-enum class MessageType(value: Int){
+enum class MessageType(val value: Short){
     {% for item in messageTypesById -%}
     {{item.Value}}({{item.Key}}),
     {% endfor -%}

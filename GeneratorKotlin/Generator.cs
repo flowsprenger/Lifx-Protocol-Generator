@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using DotLiquid;
@@ -41,11 +42,11 @@ namespace GeneratorKotlin
 
             StringBuilder output = new StringBuilder();
 
-            output.Append(prependTemplate.Render(new RenderParameters()));
+            output.Append(prependTemplate.Render(new RenderParameters(CultureInfo.InvariantCulture)));
             foreach (var domainType in Model.Types)
             {
                 output.Append(
-                    classTemplate.Render(new RenderParameters
+                    classTemplate.Render(new RenderParameters(CultureInfo.InvariantCulture)
                     {
                         LocalVariables = Hash.FromAnonymousObject(domainType),
                         Filters = new[] { typeof(SharpFilters) }
@@ -57,7 +58,7 @@ namespace GeneratorKotlin
             foreach (var domainType in Model.Enumerations)
             {
                 output.Append(
-                    enumTemplate.Render(new RenderParameters
+                    enumTemplate.Render(new RenderParameters(CultureInfo.InvariantCulture)
                     {
                         LocalVariables = Hash.FromAnonymousObject(domainType),
                         Filters = new[] { typeof(SharpFilters) }
@@ -66,7 +67,7 @@ namespace GeneratorKotlin
             }
 
             output.Append(
-                mappingTemplate.Render(new RenderParameters
+                mappingTemplate.Render(new RenderParameters(CultureInfo.InvariantCulture)
                 {
                     LocalVariables = Hash.FromAnonymousObject(new { MessageTypesById = Model.MessageTypesByIdList }),
                     Filters = new[] { typeof(SharpFilters) }
@@ -74,7 +75,7 @@ namespace GeneratorKotlin
                 );
 
 
-            output.Append(appendTemplate.Render(new RenderParameters()));
+            output.Append(appendTemplate.Render(new RenderParameters(CultureInfo.InvariantCulture)));
 
             File.WriteAllText(Path.Combine(outputDirectory, "DomainModel.kt"), output.ToString());
         }
@@ -165,7 +166,7 @@ namespace GeneratorKotlin
             }
 
             return
-                $"assert({property.Name}.size == {property.Size}); {property.Name}.forEach {{ {TypeWriterMethod(property.TypeName, "it", property.Size, streamName)} }}";
+                $"assert({property.Name}.size == {property.Length}); {property.Name}.forEach {{ {TypeWriterMethod(property.TypeName, "it", property.Size, streamName)} }}";
         }
         
         private static string TypeWriterMethod(string propertyTypeName, string propertyName, int propertySize, string streamName = "stream")

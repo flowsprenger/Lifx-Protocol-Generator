@@ -29,6 +29,24 @@ class {{name}} : {% if MessageId != 0 %} LifxMessagePayload {% else %} LifxMessa
         {% endfor -%}
     }
     
+    override fun equals(other: Any?): Boolean {
+        if(other is {{name}}){
+            return true
+            {% for property in properties -%}
+                 {% if property.size != 0 %}
+                 && {{property.name}}.contentEquals(other.{{property.name}})
+                 {% else %}
+                 && {{property.name}} == other.{{property.name}}
+                 {% endif %}
+            {% endfor -%}
+        }
+        return false
+    }
+    
+    override fun toString(): String {
+        return "{{name}} : {% for property in properties -%}{{property.name}}:${{property.name}}, {% endfor -%}"
+    }
+    
     {% if MessageId != 0 %} 
     companion object : LifxMessageDeserialzable {
         override fun parse(buffer: ByteBuffer):LifxMessagePayload {
