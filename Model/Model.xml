@@ -231,5 +231,70 @@
         <property name="index" type="byte" />
         <property name="color" type="HSBK" length="8" />
     </type>
+    
+    <type name="Tile">
+        <property name="reserved0" type="short" />
+        <property name="reserved1" type="short" />
+        <property name="reserved2" type="short" />
+        <property name="reserved3" type="short" />
+        <property name="user_x" type="float" />
+        <property name="user_y" type="float" />
+        <property name="width" type="byte" />
+        <property name="height" type="byte" />
+        <property name="reserved4" type="byte" />
+        <property name="device_version_vendor" type="word" />
+        <property name="device_version_product" type="word" />
+        <property name="device_version_version" type="word" />
+        <property name="firmware_build" type="long" />
+        <property name="reserved5" type="long" />
+        <property name="firmware_version" type="word" />
+        <property name="reserved6" type="word" />
+        
+    </type>
 
+    <type name="GetDeviceChain" messageId="701" />
+
+    <type name="StateDeviceChain" messageId="702">
+        <property name="start_index" type="byte" />
+        <property name="tile_devices" type="Tile" length="16" />
+        <property name="total_count" type="byte" />
+    </type>
+
+
+    <type name="SetUserPosition" messageId="703">
+        <property name="tile_index" type="byte" />
+        <property name="reserved" type="short" />
+        <property name="user_x" type="float" />
+        <property name="user_y" type="float" />
+    </type>
+
+    <type name="GetTileState64" messageId="707">
+        <property name="tile_index" type="byte" />
+        <property name="length" type="byte" />
+        <property name="reserved" type="byte" />
+        <property name="x" type="byte" />
+        <property name="y" type="byte" />
+        <property name="width" type="byte" />
+    </type>
+
+    <type name="StateTileState64" messageId="711">
+        <property name="tile_index" type="byte" />
+        <property name="reserved" type="byte" />
+        <property name="x" type="byte" />
+        <property name="y" type="byte" />
+        <property name="width" type="byte" />
+        <property name="colors" type="HSBK" length="64" />
+    </type>
+
+    <type name="SetTileState64" messageId="715">
+        <property name="tile_index" type="byte" />
+        <property name="length" type="byte" />
+        <property name="reserved" type="byte" />
+        <property name="x" type="byte" />
+        <property name="y" type="byte" />
+        <property name="width" type="byte" />
+        <property name="duration" type="word" />
+        <property name="colors" type="HSBK" length="64" />
+    </type>
+    
 </def>
